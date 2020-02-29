@@ -1,0 +1,8 @@
+extends layout
+
+block content
+  form(method="post", action="/schedules")
+    div
+     h5 やること
+     input(type="text" name="scheduleName")
+    button(type="submit") 作成する
