@@ -18,7 +18,7 @@ router.post('/', authenticationEnsurer, (req, res, next) => {
     createdBy: req.user.id,
     updatedAt
   }).then((scheduleId) => {
-    res.redirect('/schedules/' + scheduleId.scheduleId);
+    res.redirect('/');
   });
 });
 

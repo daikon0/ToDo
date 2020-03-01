@@ -20,6 +20,9 @@ block content
             tr
               td #{schedule.scheduleName}
               td #{schedule.updatedAt}
+              td
+                form(method="post", action=`/${schedule.scheduleId}?delete=1`)
+                  button(type="submit") 削除
     else
       div
         a(href="/login") ログイン
