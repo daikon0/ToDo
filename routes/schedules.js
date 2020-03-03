@@ -9,7 +9,7 @@ router.get('/new', authenticationEnsurer, (req, res, next) => {
   res.render('new', { user: req.user });
 });
 
-router.post('/', authenticationEnsurer, (req, res, next) => {
+router.post('/sche', authenticationEnsurer, (req, res, next) => {
   const scheduleId = uuid.v4();
   const updatedAt = new Date();
   Schedule.create({
