@@ -27,10 +27,17 @@ router.get('/', function(req, res, next) {
 });
 
 router.post('/:scheduleId', authenticationEnsurer, (req, res, next) => {
+  Schedule.findOne({ 
+    where: {
+      scheduleId: req.params.scheduleId
+    }
+  }).then(()　=> {
     if (parseInt(req.query.delete) === 1) {
       console.log('if通ってる');
+      console.log(req.params.scheduleId);
       
-      deleteScheduleAggregate(req.params.scheudleId, () => {
+
+      deleteScheduleAggregate(req.params.scheduleId, () => {
         res.redirect('/');
       });
     } else {
@@ -39,11 +46,18 @@ router.post('/:scheduleId', authenticationEnsurer, (req, res, next) => {
       next(err);
     }
   });
+});
 
-function deleteScheduleAggregate(scheudleId, done, err) {
-  Schedule.findById(scheudleId).then((scheudleId) => {
-    return scheudleId.destroy();
-  })
+function deleteScheduleAggregate(scheduleId, done, err) {
+  Schedule.findAll({
+    where: { scheduleId: scheduleId}
+  }).then((schedules) => {
+    const promises = schedules.map((s) => { return s.destroy(); });
+    return Promise.all(promises);
+  }).then(() => {
+    if (err) return done (err);
+    done();
+  });
 }
 
 module.exports = router;
