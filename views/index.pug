@@ -19,7 +19,7 @@ block content
           each schedule in schedules
             tr
               td #{schedule.scheduleName}
-              td #{schedule.updatedAt}
+              td #{schedule.formattedUpdateAt}
               td
                 form(method="post", action=`/${schedule.scheduleId}?delete=1`)
                   button(type="submit") 削除

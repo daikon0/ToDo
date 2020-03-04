@@ -41,27 +41,27 @@ describe('/login', () => {
   it('やることが作成でき、表示される', (done) => {
     User.upsert({ userId: 0, username: 'testuser'}).then(() => {
       request(app)
-        .post('/schedules')
+        .post('/sche')
         .send({ scheduleName: 'やることテスト' })
         .expect('Location', '/')
         .expect(302)
         .end((err, res) => {
           request(app)
-            //sessionを修正したら通るはず
             .get('/')
             .expect('やることテスト')
             .expect(200)
             .end((err, res) => {
-              if (err) return done(err)
-              Schedule.findByPk(scheduleName).then((s) => {
-                s.destroy().then(() => {
-                  if (err) return done (err);
-                  done();
-                });
+              if (err) return done(err);
+              Schedule.findAll({
+                where: {scheduleName: scheduleName}
+              }).then((s) => { return s.destroy().then(() => {
+                if (err) return done(err);
+                done();
+              });
+             });
               });
             });
         });
     });
-  });
 
 });

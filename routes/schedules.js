@@ -17,7 +17,7 @@ router.post('/sche', authenticationEnsurer, (req, res, next) => {
     scheduleName: req.body.scheduleName.slice(0, 255) || '(名所未設定)',
     createdBy: req.user.id,
     updatedAt
-  }).then((scheduleId) => {
+  }).then(() => {
     res.redirect('/');
   });
 });
