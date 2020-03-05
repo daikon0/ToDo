@@ -1,8 +1,8 @@
 extends layout
 
 block content
-  form(method="post", action="sche")
-    div
-     h5 やること
-     input(type="text" name="scheduleName")
-    button(type="submit") 作成する
+  form(method="post", action="sche").my-3
+    div.form-group
+     label(for="scheduleName") やること
+     input(type="text" name="scheduleName")#scheduleName.form-control
+    button(type="submit").btn.btn-info 作成する
