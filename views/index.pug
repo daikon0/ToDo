@@ -4,7 +4,7 @@ block content
   div.jumbotron.my-3
     h1.display-4 ToDoアプリ
   if user
-    div
+    div.my-3
       a(href="/schedules/new").btn.btn-info やることを作る
       - var hasSchedule = schedules.length > 0
       if hasSchedule
