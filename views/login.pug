@@ -1,6 +1,9 @@
 extends layout
 
 block content
-  a(href="/auth/github").btn.btn-info.my-3 GitHubでログイン
+  div.my-3
+    a(href="/auth/github").btn.btn-dark.fab.fa-github GitHubログイン
   if user
     p 現在 #{user.username} でログイン中
+    div
+      p Hellow
