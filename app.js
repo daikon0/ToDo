@@ -8,12 +8,7 @@ var session = require('express-session');
 var passport = require('passport');
 
 //モデルの読み込み
-var User = require('./models/user');
-var Schedule = require('./models/schedule');
-User.sync().then(() => {
-  Schedule.belongsTo(User, {foreignKey: 'createdBy'});
-  Schedule.sync();
-})
+var db = require('./models/index');
 
 var GitHubStrategy = require('passport-github2').Strategy;
 var GITHUB_CLIENT_ID = process.env.GITHUB_CLIENT_ID || 'dcad7e48ebd069d9e1b0';
@@ -34,8 +29,9 @@ passport.use(new GitHubStrategy({
 },
   function (accessToken, refreshToken, profile, done) {
     process.nextTick(function () {
-      User.upsert({
-        userId: profile.id,
+      console.log(db.Username);
+      
+      db.Username.upsert({
         username: profile.username
       }).then(() => {
         done(null, profile);
@@ -55,6 +51,7 @@ app.use(helmet());
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'pug');
+app.set('models', require('./models'));
 
 app.use(logger('dev'));
 app.use(express.json());

@@ -1,14 +1,17 @@
 const express = require('express');
 const router = express.Router();
-const Schedule = require('../models/schedule');
+const Schedule = require('../models/sche');
 const authenticationEnsurer = require('./authentication-ensurer');
 const moment = require('moment-timezone');
+const db = require('../models/index');
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
   const title = 'ToDoリスト'
   if (req.user) {
-    Schedule.findAll({
+    console.log(db.sche);
+    
+    db.sche.findAll({
       where: {
         createdBy: req.user.id
       },
@@ -30,7 +33,7 @@ router.get('/', function(req, res, next) {
 });
 
 router.post('/:scheduleId', authenticationEnsurer, (req, res, next) => {
-  Schedule.findOne({ 
+  db.sche.findOne({ 
     where: {
       scheduleId: req.params.scheduleId
     }
@@ -52,7 +55,7 @@ router.post('/:scheduleId', authenticationEnsurer, (req, res, next) => {
 });
 
 function deleteScheduleAggregate(scheduleId, done, err) {
-  Schedule.findAll({
+  db.Sche.findAll({
     where: { scheduleId: scheduleId}
   }).then((schedule) => {
     const promises = schedule.map((s) => { return s.destroy(); });
